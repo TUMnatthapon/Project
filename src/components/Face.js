@@ -2,6 +2,7 @@
 import * as faceapi from 'face-api.js';
 
 import { useState, useEffect } from 'react';
+const lineNotify = require('line-notify-nodejs')('3y0LGAoVDB32nZ6HRPvq1Vto2OGkgpPtwxCBv7eapOu');
 const Face = () => {
     useEffect(() => {
         Webcam()
@@ -45,15 +46,17 @@ const Face = () => {
                         setName(result.toString())
                     })
                 }
-
+                if (name === 'Tum') {
+                    lineNotify.notify({message: 'ผลการตรวจสอบใบหน้าตรงกัน !!!'});
+                  }
             }, 100)
         })
         function loadLabeledImages() {
-            const labels = ['Arim', 'Tum']
+            const labels = ['Affan','Arim','Ham','Iffan','Nut','Plaa','Tum']
             return Promise.all(
                 labels.map(async label => {
                     const descriptions = []
-                    for (let i = 1; i <= 7; i++) {
+                    for (let i = 1; i <= 9; i++) {
                         const img = await faceapi.fetchImage(`/images/${label}/${i}.jpg`)
                         const detections = await faceapi.detectSingleFace(img).withFaceLandmarks().withFaceDescriptor()
                         descriptions.push(detections.descriptor)
